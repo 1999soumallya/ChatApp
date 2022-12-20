@@ -1,0 +1,209 @@
+.RegisterForm,
+.LoginForm {
+    height: 90vh;
+}
+
+.RegisterForm .mt-3,
+.RegisterForm .mt-2 {
+    min-height: 102px;
+}
+
+.RegisterForm img,
+.LoginForm img {
+    height: 5rem;
+}
+
+.RegisterForm .brand,
+.LoginForm .brand {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.RegisterForm form,
+.LoginForm form {
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 2rem;
+    background-color: #00000076;
+    padding: 2rem 5rem;
+}
+
+.RegisterForm h1,
+.LoginForm h1 {
+    font-weight: 100;
+    color: white;
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgb(79, 98, 148);
+}
+
+.RegisterForm p,
+.LoginForm p {
+    color: #bf1650;
+}
+
+.RegisterForm p {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.RegisterForm p::before,
+.LoginForm p::before {
+    display: inline;
+    content: "⚠ ";
+}
+
+.RegisterForm input,
+.LoginForm input {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    border-radius: 4px;
+    border: 0.1rem solid #4e0eff;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    background-color: transparent;
+    color: white;
+}
+
+.RegisterForm input:focus,
+.LoginForm input:focus {
+    border: 0.1rem solid #997af0;
+    outline: none;
+}
+
+.RegisterForm label,
+.LoginForm label {
+    line-height: 2;
+    text-align: left;
+    display: block;
+    margin-bottom: 13px;
+    margin-top: 20px;
+    color: white;
+    font-size: 14px;
+    font-weight: 200;
+}
+
+.RegisterForm button[type="submit"],
+.RegisterForm input[type="submit"],
+.LoginForm button[type="submit"],
+.LoginForm input[type="submit"] {
+    background: #997af0;
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    font-weight: 100;
+    cursor: pointer;
+    border-radius: 0.4rem;
+    font-size: 1rem;
+    text-transform: uppercase;
+    transition: 0.5s ease-in-out;
+}
+
+.RegisterForm button[type="submit"]:hover,
+.RegisterForm input[type="submit"]:hover,
+.LoginForm button[type="submit"]:hover,
+.LoginForm input[type="submit"]:hover {
+    background-color: #4e0eff;
+}
+
+.RegisterForm button[type="submit"]:active,
+.RegisterForm input[type="button"]:active,
+.RegisterForm input[type="submit"]:active,
+.LoginForm button[type="submit"]:active,
+.LoginForm input[type="button"]:active,
+.LoginForm input[type="submit"]:active {
+    transition: 0.3s all;
+    transform: translateY(3px);
+    border: 1px solid transparent;
+    opacity: 0.8;
+}
+
+.RegisterForm input:disabled,
+.LoginForm input:disabled {
+    opacity: 0.4;
+}
+
+.RegisterForm input[type="button"]:hover,
+.LoginForm input[type="button"]:hover {
+    transition: 0.3s all;
+}
+
+.RegisterForm button[type="submit"],
+.RegisterForm input[type="button"],
+.RegisterForm input[type="submit"],
+.LoginForm button[type="submit"],
+.LoginForm input[type="button"],
+.LoginForm input[type="submit"] {
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.RegisterForm button[type="button"],
+.LoginForm button[type="button"] {
+    display: block;
+    appearance: none;
+    background: #333;
+    color: white;
+    border: none;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border-radius: 4px;
+}
+
+.RegisterForm pre,
+.LoginForm pre {
+    color: white;
+}
+
+.RegisterForm hr,
+.LoginForm hr {
+    margin-top: 30px;
+}
+
+.RegisterForm button,
+.LoginForm button {
+    display: block;
+    appearance: none;
+    margin-top: 0 !important;
+    border: 1px solid #333;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border-radius: 4px;
+}
+
+.RegisterForm span, .LoginForm span{
+    color: rgba(255, 255, 255, 0.699);
+    text-transform: capitalize;
+}
+
+.RegisterForm span a, .LoginForm span a{
+    text-decoration: none;
+}
+
+#email {
+    display: flex;
+    gap: 10px;
+}
+
+#email span {
+    text-align: center;
+    position: absolute;
+    top: 33%;
+    left: 90%;
+    transform: translate(-33%, -90%);
+}
+
+#email span .fa-xmark{
+    color: #dc3545;
+}
+#email span .fa-check {
+    color: #198754;
+}

@@ -1,40 +1,100 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 import { useForm } from 'react-hook-form'
+import { ErrorMessage } from "@hookform/error-message";
+import { Button, Col, Image, Row } from 'react-bootstrap'
+import '../css/Register.css'
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import Logo from '../assets/logo.svg'
+import validator from 'validator';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons'
+
 
 const FormContainer = styled.div``;
 
 export default function Register() {
 
-  const { register, handleSubmit, reset, clearErrors, formState: { errors } } = useForm()
+  const [EmailError, setEmailError] = useState(true)
+
+  const { register, handleSubmit, reset, formState: { errors }, clearErrors } = useForm()
+
+  const validateEmail = (email) => {
+    if (email.length > 0) {      
+      if (!validator.isEmail(email)) {
+        return false
+      }
+      // if (validator.isEmail(email)) {
+      //   setEmailError(<FontAwesomeIcon icon={faCheck} />)
+      // } else {
+      //   setEmailError(<FontAwesomeIcon icon={faXmark} />)
+      //   return
+      // }
+    } else {
+      setEmailError("")
+    }
+  }
 
 
   const OnSubmit = (data) => {
+    if (data.password !== data.confirmPassword) {
+      toast.error("Password & Confirm Password not matched", { theme: 'dark', position: 'bottom-right', draggable: true, pauseOnHover: true })
+      return
+    }
+    if (validateEmail(data.email) === false) {
+      toast.error("Enter a valid Email", { theme: 'dark', position: 'bottom-right', draggable: true, pauseOnHover: true })
+      return
+    }
+    // validateEmail(data.email)
     console.log(data);
-  }
-
-  if (errors) {
-    console.log(errors['confirmPassword']);
+    reset()
+    setEmailError("")
+    clearErrors()
   }
 
 
   return (
     <>
-      <FormContainer>
-        <form onSubmit={handleSubmit(OnSubmit)}>
-          <div className="brand">
-            <img src='' alt='' />
-            <h1>snappy</h1>
-          </div>
-          <input type="text" placeholder='UserName' name='userName' {...register("userName", { required: true })} />
-          <input type="email" placeholder='Email' name='email' {...register("email", { required: true })} />
-          <input type="password" placeholder='Password' name='password' {...register("password", { required: true })} />
-          <input type="password" placeholder='Confirm Password' name='confirmPassword' {...register("confirmPassword", { required: true })} />
-          <button type="submit">Create User</button>
-          <span>already have an account ? <Link to={"/login"}> Login </Link></span>
+      <FormContainer className='RegisterForm'>
+        <form onSubmit={handleSubmit(OnSubmit)} autoComplete="off">
+          <Row>
+            <div className="brand">
+              <Image src={Logo} alt='Logo' />
+              <h1>snappy</h1>
+            </div>
+          </Row>
+          <Row>
+            <Col md={6} className="mt-3">
+              <input type="text" placeholder='UserName' name='userName' {...register("userName", { required: "User Name is Require can not blank It" })} />
+              <ErrorMessage errors={errors} name="userName" className='position-relative' as="p" />
+            </Col>
+            <Col md={6} className="mt-3">
+              <div id='email'>
+                <input type="email" placeholder='Email' name='email' {...register("email", { required: "Email is Require can not blank It" })} />
+                <span>{EmailError}</span>
+              </div>
+              <ErrorMessage errors={errors} name="email" className='position-relative' as="p" />
+            </Col>
+            <Col md={6} className="mt-2">
+              <input type="password" placeholder='Password' name='password' {...register("password", { required: "Password is Require can not blank It" })} />
+              <ErrorMessage errors={errors} name="password" className='position-relative' as="p" />
+            </Col>
+            <Col md={6} className="mt-2">
+              <input type="password" placeholder='Confirm Password' name='confirmPassword' {...register("confirmPassword", { required: "Confirm Password is Require can not blank It" })} />
+              <ErrorMessage errors={errors} name="confirmPassword" className='position-relative' as="p" />
+            </Col>
+          </Row>
+          <Row>
+            <Col md={12} className="mt-2 d-flex justify-content-between">
+              <Button type='submit'> Create User </Button>
+              <span>already have an account ? <Link to={"/login"}> Login </Link></span>
+            </Col>
+          </Row>
         </form>
       </FormContainer>
+      <ToastContainer />
     </>
   )
 }
