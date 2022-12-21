@@ -4,8 +4,11 @@
 }
 
 .RegisterForm .mt-3,
-.RegisterForm .mt-2 {
-    min-height: 102px;
+.RegisterForm .mt-2,
+.LoginForm .mt-3,
+.LoginForm .mt-2 {
+    height: 97px;
+    max-height: 97px;
 }
 
 .RegisterForm img,
@@ -47,9 +50,10 @@
     color: #bf1650;
 }
 
-.RegisterForm p {
+.RegisterForm p, .LoginForm p {
     margin: 0 !important;
     padding: 0 !important;
+    font-size: 12px;
 }
 
 .RegisterForm p::before,
@@ -186,24 +190,4 @@
 
 .RegisterForm span a, .LoginForm span a{
     text-decoration: none;
-}
-
-#email {
-    display: flex;
-    gap: 10px;
-}
-
-#email span {
-    text-align: center;
-    position: absolute;
-    top: 33%;
-    left: 90%;
-    transform: translate(-33%, -90%);
-}
-
-#email span .fa-xmark{
-    color: #dc3545;
-}
-#email span .fa-check {
-    color: #198754;
 }

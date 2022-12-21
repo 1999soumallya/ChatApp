@@ -8,6 +8,8 @@ const app = express()
 app.use(cors());
 app.use(express.json());
 
+app.use('/api/auth', require('./Routs/userRoutes'))
+
 mongoose.set("debug", true);
 mongoose.set("strictQuery", false);
 mongoose.connect(process.env.MONGO_URL).then(() => {

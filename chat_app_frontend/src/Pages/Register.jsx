@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
 import { useForm } from 'react-hook-form'
 import { ErrorMessage } from "@hookform/error-message";
@@ -9,36 +9,24 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Logo from '../assets/logo.svg'
 import validator from 'validator';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons'
-
+import axios from 'axios'
+import { registerRoute } from '../utils/ApiRoutes';
 
 const FormContainer = styled.div``;
 
 export default function Register() {
 
-  const [EmailError, setEmailError] = useState(true)
-
   const { register, handleSubmit, reset, formState: { errors }, clearErrors } = useForm()
+  const navigate = useNavigate()
 
   const validateEmail = (email) => {
-    if (email.length > 0) {      
-      if (!validator.isEmail(email)) {
-        return false
-      }
-      // if (validator.isEmail(email)) {
-      //   setEmailError(<FontAwesomeIcon icon={faCheck} />)
-      // } else {
-      //   setEmailError(<FontAwesomeIcon icon={faXmark} />)
-      //   return
-      // }
-    } else {
-      setEmailError("")
+    if (!validator.isEmail(email)) {
+      return false
     }
   }
 
 
-  const OnSubmit = (data) => {
+  const OnSubmit = async (data) => {
     if (data.password !== data.confirmPassword) {
       toast.error("Password & Confirm Password not matched", { theme: 'dark', position: 'bottom-right', draggable: true, pauseOnHover: true })
       return
@@ -47,11 +35,18 @@ export default function Register() {
       toast.error("Enter a valid Email", { theme: 'dark', position: 'bottom-right', draggable: true, pauseOnHover: true })
       return
     }
-    // validateEmail(data.email)
-    console.log(data);
-    reset()
-    setEmailError("")
-    clearErrors()
+    const { deta } = await axios.post(registerRoute, data)
+    console.log(deta);
+    if (deta.status === false) {
+      toast.error(deta.msg, { theme: 'dark', position: 'bottom-right', draggable: true, pauseOnHover: true })
+      return
+    }
+    if (deta.status === true) {      
+      localStorage.setItem('chat-app-user', JSON.stringify(deta.user))
+      reset()
+      clearErrors()
+      navigate('/')
+    }
   }
 
 
@@ -71,10 +66,7 @@ export default function Register() {
               <ErrorMessage errors={errors} name="userName" className='position-relative' as="p" />
             </Col>
             <Col md={6} className="mt-3">
-              <div id='email'>
-                <input type="email" placeholder='Email' name='email' {...register("email", { required: "Email is Require can not blank It" })} />
-                <span>{EmailError}</span>
-              </div>
+              <input type="email" placeholder='Email' name='email' {...register("email", { required: "Email is Require can not blank It" })} />
               <ErrorMessage errors={errors} name="email" className='position-relative' as="p" />
             </Col>
             <Col md={6} className="mt-2">
@@ -87,8 +79,8 @@ export default function Register() {
             </Col>
           </Row>
           <Row>
-            <Col md={12} className="mt-2 d-flex justify-content-between">
-              <Button type='submit'> Create User </Button>
+            <Col md={12} className="mt-2 d-flex justify-content-between align-items-center">
+              <Button type='submit' className='mb-0'> Create User </Button>
               <span>already have an account ? <Link to={"/login"}> Login </Link></span>
             </Col>
           </Row>
